@@ -1,0 +1,44 @@
+<head>
+	<link
+	rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<style>
+		.centered {
+			margin: auto;
+			max-width: 300px;
+			padding-top: 10%;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="centered">
+		<div class="main">
+	{% csrf_token %}
+	{% for data in dataset %}
+	<table border = "2">
+		<tr>
+		<th>Rank</th>
+		<th>Name</th>
+		<th>Code</th>
+		<th>Cost</th>
+	</tr>
+	<tr>
+		<td>{{ data.rank }}</td>
+		<td>{{ data.name }}</td>
+		<td>{{ data.code }}</td>
+		<td>{{ data.cost }}</td>
+
+	</table>
+	{% endfor %}
+	<center><button type="submit" class="btn btn-primary">Add</button></center>
+</div>
+	</div>
+</body>
+
+</html>
+
+
+
+
+
