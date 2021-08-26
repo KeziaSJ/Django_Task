@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<div class="container" >
+    <div class="row" style="margin-top: 2rem; margin-left: 1rem;">
+        <a href="{% url 'top-players' %}"><button type="button" class="btn btn-danger">Top Players</button></a>
+        <!--Add player Button trigger modal -->
+        <button type="button" class="btn btn-success"  data-toggle="modal" data-target="#addPlayer">
+            Add Player
+        </button>
+        
+
+    </div>
+    <br/>
+    <div id="tablediv">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="look" scope="col">#</th>
+                    <th class="look" scope="col">Name</th>
+                    <th class="look" scope="col">Rank</th>
+                    <th class="look" scope="col">Code</th>
+                    <th class="look" scope="col">Cost</th>
+                    <th></th>
+
+
+                </tr>
+            </thead>
+            <tbody style="background-color: white;">
+                {% for player in page_obj %}
+                <tr>
+                    <th class="look" scope="row">{{forloop.counter}}</th>
+                    <td class="look">{{player.name}}</td>
+                    <td class="look">{{player.rank}}</td>
+                    <td class="look">{{player.code}}</td>
+                    <td class="look">{{player.cost}}</td>
+                    <td class="look">
+                        <button type="button" class="btn btn-dark btn-sm" data-toggle="modal"
+                            data-target="#editPlayer-{{player.id}}">Edit</button>
+                        <button type="button" onclick="deletePlayer('{{player.id}}')"
+                        onclick="" class="btn btn-danger btn-sm">Delete</button>
+                    </td>
+
+                </tr>
+                <!-- Edit-player-Modal -->
+                <div class="modal fade" id="editPlayer-{{player.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title text-center" id="exampleModalLabel">Edit Player</h2>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form id="formEditplayer" method="POST" action="{% url 'edit-player' pk=player.id %}">{%csrf_token%}
+
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Player name</label>
+                                        <input type="text" class="form-control" id="name" name="name"
+                                            aria-describedby="emailHelp" placeholder="Enter name" value="{{player.name}}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">rank</label>
+                                        <input type="text" class="form-control" id="rank" name="rank"
+                                            aria-describedby="emailHelp" placeholder="Enter rank" value="{{player.rank}}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Code</label>
+                                        <input type="text" class="form-control" id="code" name="code"
+                                            aria-describedby="emailHelp" placeholder="Enter code" value="{{player.code}}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Cost</label>
+                                        <input type="text" class="form-control" id="cost" name="cost"
+                                            aria-describedby="emailHelp" placeholder="Enter cost" value="{{player.cost}}" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" onclick="editPlayers('{{player.id}}')" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+    <div class="row" style="float: right;margin-right: 1rem;">
+        <div class="pagination" >
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}"><< Prev</a>
+                {% endif %}
+                {% for i in page_obj.paginator.page_range %}
+                {% if page_obj.number == i %}
+                  <span>{{ i }} <span class="sr-only">(current)</span></span>
+                {% else %}
+                  <a href="?page={{ i }}">{{ i }}</a>
+                {% endif %}
+              {% endfor %}
+             
+    
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">Next>> </a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</div>
+
+<!-- Add player Modal -->
+<div class="modal fade" id="addPlayer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title text-center" id="exampleModalLabel">Add Player</h1>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="formAddplayer">{%csrf_token%}
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Player name</label>
+                        <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp"
+                            placeholder="Enter name">
+                    </div>
+                    <div class="form-group">
+                    <label for="exampleInputEmail1">rank</label>
+                    <input type="text" class="form-control" id="rank" name="rank"
+                    aria-describedby="emailHelp" placeholder="Enter rank" value="{{player.rank}}" required>
+                </div>
+                    <div class="form-group">
+                    <label for="exampleInputEmail1">Code</label>
+                    <input type="text" class="form-control" id="code" name="code"
+                    aria-describedby="emailHelp" placeholder="Enter code" value="{{player.code}}" required>
+                    </div>
+                     <div class="form-group">
+                    <label for="exampleInputEmail1">Cost</label>
+                        <input type="text" class="form-control" id="cost" name="cost"
+                        aria-describedby="emailHelp" placeholder="Enter cost" value="{{player.cost}}" required>
+                    </div>
+                                </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" onclick="addPlayers()" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

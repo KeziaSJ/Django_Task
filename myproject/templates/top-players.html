@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Top players{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row" style="margin-top: 2rem; margin-left: 1rem;">
+        <a href="{% url 'home' %}"><button type="button" class="btn btn-primary">Add Data</button></a>
+      
+    </div>
+    <div class="row " style="margin-left: 45rem;">
+      <h4 class="style">Top Players</h4>
+    </div>
+<div class= "row">
+    <div id="tablediv">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="look" scope="col">#ID</th>
+                    <th class="look" scope="col">Name</th>
+                    <th class="look" scope="col">Rank</th>
+                    <th class="look" scope="col">Code</th>
+                    <th class="look" scope="col">Cost</th>
+                </tr>
+            </thead>
+            <tbody style="background-color: white;">
+                {% for player in page_obj %}
+                <tr>
+                    <th class="look" scope="row">{{forloop.counter}}</th>
+                   <td class="look">{{player.name}}</td>
+                    <td class="look">{{player.rank}}</td>
+                    <td class="look">{{player.code}}</td>
+                    <td class="look">{{player.cost}}</td>
+                </tr>
+                
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+    <div class="row" style="float: right; margin-right: 1rem;">
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}"> << Prev</a>
+                {% endif %}
+                {% for i in page_obj.paginator.page_range %}
+                {% if page_obj.number == i %}
+                  <span>{{ i }} <span class="sr-only">(current)</span></span>
+                {% else %}
+                  <a href="?page={{ i }}">{{ i }}</a>
+                {% endif %}
+              {% endfor %}
+             
+    
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">Next >></a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+   
+</div>
+
+{% endblock %}

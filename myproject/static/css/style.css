@@ -1,0 +1,39 @@
+
+.header
+{
+    background-image: url("/static/images/wallpaper.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+.overlay{
+ position: absolute;
+ min-height: 100%;
+ min-width: 100%;
+ left: 0;
+ top: 0;
+ background: rgba(0, 0, 0, 0.2);
+}
+
+th{ font-size: 20px; font : white }
+td{font-size :17px}
+thead{background: white}
+.table
+{
+    font: bold;
+    font-family: "Raleway";
+
+}
+.style{
+    font-size: 40px;
+    font-family: "Raleway";
+    color :white;
+}
+.error {
+        color: red;
+    }
+
+.look {
+        text-align: center
+    }
