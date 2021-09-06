@@ -1,0 +1,29 @@
+
+.header{background : url('/static/images/wallpaper.jpeg');
+				background-attachment: fixed;
+    			background-size: cover;
+    			background-position: center;
+    		}
+.overlay{
+				position: relative;
+ 				margin-top: 100px;
+ 				margin-left: 250px;
+ 				margin-bottom: 100px;
+ 				margin-right: 250px;
+ 				background: rgba(0, 0, 0, 0.2);
+ 			}
+.style{font-family : serif;
+				text-align: center;}
+
+.position{
+				margin-top :10px;
+				margin-bottom :10px;}
+		
+.font{
+			font-family : serif;}
+
+.navbar{
+			font-size: 25px;
+			background: rgba(0, 0, 0, 0.1);}
+.striker{
+    		text-decoration: line-through;}
